@@ -3,7 +3,7 @@ const videoUrl = document.getElementById("videoUrl");
 const resultDiv = document.getElementById("result");
 const downloadLink = document.getElementById("downloadLink");
 
-const API_URL = "https://your-render-url.onrender.com/api/getvideo"; // <-- change this
+const API_URL = "https://vidfetch-backend.onrender.com/api/getvideo"; // <-- changed to own render url
 
 downloadBtn.addEventListener("click", async () => {
   const url = videoUrl.value.trim();
