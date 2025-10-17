@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VidFetch - Video Downloader</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🎥 VidFetch</h1>
+    <p>Download videos from YouTube, TikTok, Instagram & Facebook</p>
+
+    <input type="text" id="videoUrl" placeholder="Paste video link here..." />
+    <button id="downloadBtn">Get Download Link</button>
+
+    <div id="result" class="hidden">
+      <h3>Download Link</h3>
+      <a id="downloadLink" href="#" target="_blank">Fetching...</a>
+    </div>
+
+    <p class="footer">Powered by your Render backend</p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
