@@ -27,8 +27,17 @@ downloadBtn.addEventListener("click", async () => {
 
     const data = await response.json();
     if (data.downloadUrl) {
-      downloadLink.textContent = "Click here to download";
+      // show clickable link
+      downloadLink.textContent = "Click to Download Video";
       downloadLink.href = data.downloadUrl;
+
+      // auto-download
+      const a = document.createElement("a");
+      a.href = data.downloadUrl;
+      a.download = "video.mp4";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
     } else {
       downloadLink.textContent = "Could not extract video link.";
     }
@@ -37,3 +46,4 @@ downloadBtn.addEventListener("click", async () => {
     downloadLink.textContent = "Error fetching video link.";
   }
 });
+
