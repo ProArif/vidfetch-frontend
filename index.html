@@ -1,25 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Loadly - Your No 1 Video Downloader</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Video Downloader</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>🎥 Loadly</h1>
-    <p>Download videos from YouTube, TikTok, Instagram & Facebook</p>
-
-    <input type="text" id="videoUrl" placeholder="Paste video link here..." />
-    <button id="downloadBtn">Get Download Link</button>
-
-    <div id="result" class="hidden">
-      <h3>Download Link</h3>
-      <a id="downloadLink" href="#" target="_blank">Fetching...</a>
-    </div>
-
-    <p class="footer">created with <3 in the Nordics</p>
+    <h1>Video Downloader</h1>
+    <input type="text" id="videoUrl" placeholder="Enter video URL">
+    <button id="downloadBtn">Download Video</button>
+    <p id="status"></p>
+    <p id="downloadLink"></p>
   </div>
 
   <script src="script.js"></script>
