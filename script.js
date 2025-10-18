@@ -1,49 +1,48 @@
-const downloadBtn = document.getElementById("downloadBtn");
-const videoUrl = document.getElementById("videoUrl");
-const resultDiv = document.getElementById("result");
-const downloadLink = document.getElementById("downloadLink");
+const backendUrl = "https://loadly.onrender.com"; // Your Render backend URL
 
-const API_URL = "https://vidfetch-backend.onrender.com/api/getvideo"; // <-- changed to own render url
+const videoUrlInput = document.getElementById("videoUrl");
+const downloadBtn = document.getElementById("downloadBtn");
+const statusText = document.getElementById("status");
+const downloadLinkContainer = document.getElementById("downloadLink");
 
 downloadBtn.addEventListener("click", async () => {
-  const url = videoUrl.value.trim();
+  const url = videoUrlInput.value.trim();
+  statusText.textContent = "";
+  downloadLinkContainer.innerHTML = "";
+
   if (!url) {
-    alert("Please paste a video link first!");
+    statusText.textContent = "Please enter a video URL";
     return;
   }
 
-  resultDiv.classList.remove("hidden");
-  downloadLink.textContent = "Fetching...";
-  downloadLink.removeAttribute("href");
-
+  statusText.textContent = "Fetching download link...";
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch(`${backendUrl}/api/getvideo`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ url }),
     });
 
-    if (!response.ok) throw new Error("Failed to fetch download link");
-
     const data = await response.json();
-    if (data.downloadUrl) {
-      // show clickable link
-      downloadLink.textContent = "Click to Download Video";
-      downloadLink.href = data.downloadUrl;
 
-      // auto-download
-      const a = document.createElement("a");
-      a.href = data.downloadUrl;
-      a.download = "video.mp4";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+    if (data.downloadUrl) {
+      statusText.textContent = "Download ready!";
+
+      // Trigger automatic download
+      const link = document.createElement("a");
+      link.href = data.downloadUrl;
+      link.download = "video.mp4";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      // Optional: Show clickable link
+      downloadLinkContainer.innerHTML = `<a href="${data.downloadUrl}" target="_blank">Click here if download didn’t start automatically</a>`;
     } else {
-      downloadLink.textContent = "Could not extract video link.";
+      statusText.textContent = `Error: ${data.error || "Failed to fetch video URL"}`;
     }
   } catch (err) {
     console.error(err);
-    downloadLink.textContent = "Error fetching video link.";
+    statusText.textContent = "Error connecting to backend";
   }
 });
-
