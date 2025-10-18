@@ -1,5 +1,7 @@
-const backendUrl = "https://loadly.onrender.com"; // Your Render backend URL
+// Replace with your Render backend URL
+const backendUrl = "https://loadly.onrender.com";
 
+// DOM elements
 const videoUrlInput = document.getElementById("videoUrl");
 const downloadBtn = document.getElementById("downloadBtn");
 const statusText = document.getElementById("status");
@@ -16,6 +18,8 @@ downloadBtn.addEventListener("click", async () => {
   }
 
   statusText.textContent = "Fetching download link...";
+  downloadBtn.disabled = true;
+
   try {
     const response = await fetch(`${backendUrl}/api/getvideo`, {
       method: "POST",
@@ -26,7 +30,7 @@ downloadBtn.addEventListener("click", async () => {
     const data = await response.json();
 
     if (data.downloadUrl) {
-      statusText.textContent = "Download ready!";
+      statusText.textContent = "✅ Download ready!";
 
       // Trigger automatic download
       const link = document.createElement("a");
@@ -36,13 +40,15 @@ downloadBtn.addEventListener("click", async () => {
       link.click();
       link.remove();
 
-      // Optional: Show clickable link
+      // Optional: clickable fallback link
       downloadLinkContainer.innerHTML = `<a href="${data.downloadUrl}" target="_blank">Click here if download didn’t start automatically</a>`;
     } else {
       statusText.textContent = `Error: ${data.error || "Failed to fetch video URL"}`;
     }
   } catch (err) {
-    console.error(err);
+    console.error("Error connecting to backend:", err);
     statusText.textContent = "Error connecting to backend";
+  } finally {
+    downloadBtn.disabled = false;
   }
 });
